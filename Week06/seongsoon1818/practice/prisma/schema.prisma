@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Member {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+  loginId String @map("login_id") @db.VarChar(20)
+  password String @db.VarChar(255)
+  birth String @db.VarChar(8)
+  gender String @default("N") @db.Char(1)
+  address String? @db.VarChar(255)
+  regDate DateTime @default(now()) @map("red_date") @db.DateTime(0)
+  status String @default("A") @db.Char(1)
+  point Int @default(0) @db.UnsignedInt
+  email String @db.VarChar(40)
+  phoneNumber String @map("phone_number") @db.VarChar(13)
+  phoneVerified String @default("N") @map("phone_verified") @db.Char(1)
+
+  @@map("members")
+}
