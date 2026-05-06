@@ -1,0 +1,168 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Member {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+  loginId String @map("login_id") @db.VarChar(20)
+  password String @db.VarChar(255)
+  birth String @db.VarChar(8)
+  gender String @default("N") @db.Char(1)
+  address String? @db.VarChar(255)
+  regDate DateTime @default(now()) @map("red_date") @db.DateTime(0)
+  status String @default("A") @db.Char(1)
+  point Int @default(0) @db.UnsignedInt
+  email String @db.VarChar(40)
+  phoneNumber String @map("phone_number") @db.VarChar(13)
+  phoneVerified String @default("N") @map("phone_verified") @db.Char(1)
+
+  favoriteMaps FavoriteMap[]
+  revies Review[]
+  userMissions UserMission[]
+  regionMissionStatuses RegionMissonStatus[]
+  pointMaps PointMap[]
+
+  @@map("members")
+}
+
+model Category {
+  id Int @id @default(autoincrement()) @db.Int
+  name String @db.VarChar(20)
+
+  storeCategories StoreCategory[]
+  favoriteMap FavoriteMap[]
+
+  @@map("category")
+}
+
+model Region {
+  id Int @id @default(autoincrement()) @db.Int
+  name String @db.VarChar(40)
+
+  stores Store[]
+  regionMissionStatuses RegionMissonStatus[]
+
+  @@map("region")
+}
+model Store {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+  address String @db.VarChar(255)
+  name String @db.VarChar(20)
+  regionId Int @map("region_id") @db.Int
+
+  region Region @relation(fields: [regionId], references: [id])
+
+  storeCategories StoreCategory[]
+  missions Mission[]
+  reviews Review[]
+
+  @@map("store")
+}
+
+model StoreCategory {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+  storeId BigInt @map("store_id") @db.BigInt
+  categoryId Int @map("category_id") @db.Int
+
+  store Store @relation(fields: [storeId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@map("storecategory")
+}
+
+model Mission {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+  title String @db.VarChar(40)
+  storeId BigInt @map("store_id") @db.BigInt
+  description String @db.Text
+  point Int @db.UnsignedInt
+  regDate DateTime @default(now()) @map("reg_date") @db.DateTime(0)
+  expiredDate DateTime @map("expired_date") @db.DateTime(0)
+  status String @default("A") @db.Char(1)
+
+  store Store @relation(fields: [storeId], references: [id])
+  
+  userMissions UserMission[]
+
+  @@map("mission")
+}
+
+model FavoriteMap {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+  userId BigInt @map("user_id") @db.BigInt
+  categoryId Int @map("category_id") @db.Int
+
+  member Member @relation(fields: [userId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@map("favorite_map")
+}
+
+model Review {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+  storeId BigInt @map("store_id") @db.BigInt
+  userId BigInt @map("user_id") @db.BigInt
+  regDate DateTime @default(now()) @map("reg_date") @db.DateTime(0)
+  editDate DateTime? @map("edit_date") @db.DateTime(0)
+  content String @db.Text
+  status String @default("A") @db.Char(1)
+  star Int @db.Int
+
+  store Store @relation(fields: [storeId], references: [id])
+  member Member @relation(fields: [userId], references: [id])
+
+  @@map("review")
+}
+
+model UserMission {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+  missionId BigInt @map("mission_id") @db.BigInt
+  userId BigInt @map("user_id") @db.BigInt
+  expiredDate DateTime @map("expired_date") @db.DateTime(0)
+  completeDate DateTime? @map("completed_date") @db.DateTime(0)
+  status String @default("G") @db.Char(1)
+
+  mission Mission @relation(fields: [missionId], references: [id])
+  member Member @relation(fields: [userId], references: [id])
+
+  pointMaps PointMap[]
+
+  @@map("user_mission")
+}
+
+model RegionMissonStatus {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+  userId BigInt @map("user_id") @db.BigInt
+  regionId Int @map("region_id") @db.Int
+  missionCount Int @default(0) @map("mission_count") @db.Int
+  updateDate DateTime? @map("update_date") @db.DateTime(0)
+
+  member Member @relation(fields: [userId], references: [id])
+  region Region @relation(fields: [regionId], references: [id])
+
+  @@map("region_mission_status")
+}
+
+model PointMap {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+  userId BigInt @map("user_id") @db.BigInt
+  userMissionId BigInt? @map("user_mission_id") @db.BigInt
+  point Int @db.Int
+  pointType String @map("point_type") @db.Char(1)
+  description String? @db.Text
+  regDate DateTime @default(now()) @map("reg_date") @db.DateTime(0)
+
+  member Member @relation(fields: [userId], references: [id])
+  userMission UserMission? @relation(fields: [userMissionId], references: [id])
+  @@map("point_map")
+}
