@@ -1,0 +1,1297 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"UserSignUpResponse": {
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"preferCategory": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"email",
+					"name",
+					"preferCategory"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ApiResponse_UserSignUpResponse_": {
+				"properties": {
+					"resultType": {
+						"type": "string",
+						"enum": [
+							"SUCCESS"
+						],
+						"nullable": false
+					},
+					"error": {
+						"type": "number",
+						"enum": [
+							null
+						],
+						"nullable": true
+					},
+					"data": {
+						"$ref": "#/components/schemas/UserSignUpResponse"
+					}
+				},
+				"required": [
+					"resultType",
+					"error",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserSignUpRequest": {
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"gender": {
+						"type": "string"
+					},
+					"age": {
+						"type": "number",
+						"format": "double"
+					},
+					"address": {
+						"type": "string"
+					},
+					"specAddress": {
+						"type": "string"
+					},
+					"phoneNum": {
+						"type": "string"
+					},
+					"preferences": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"email",
+					"name",
+					"gender",
+					"age",
+					"phoneNum",
+					"preferences"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ApiResponse_any_": {
+				"properties": {
+					"resultType": {
+						"type": "string",
+						"enum": [
+							"SUCCESS"
+						],
+						"nullable": false
+					},
+					"error": {
+						"type": "number",
+						"enum": [
+							null
+						],
+						"nullable": true
+					},
+					"data": {}
+				},
+				"required": [
+					"resultType",
+					"error",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserUpdateRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"gender": {
+						"type": "string"
+					},
+					"age": {
+						"type": "number",
+						"format": "double"
+					},
+					"address": {
+						"type": "string"
+					},
+					"detailAddress": {
+						"type": "string"
+					},
+					"phoneNumber": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Awaited_ReturnType_typeoflistMyReviews__": {
+				"properties": {
+					"pagination": {
+						"properties": {
+							"cursor": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"cursor"
+						],
+						"type": "object"
+					},
+					"data": {
+						"items": {
+							"properties": {
+								"store": {
+									"properties": {
+										"name": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"name"
+									],
+									"type": "object"
+								},
+								"createdAt": {
+									"type": "string",
+									"format": "date-time"
+								},
+								"score": {
+									"type": "number",
+									"format": "double"
+								},
+								"body": {
+									"type": "string"
+								},
+								"id": {
+									"type": "number",
+									"format": "double"
+								}
+							},
+							"required": [
+								"store",
+								"createdAt",
+								"score",
+								"body",
+								"id"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"pagination",
+					"data"
+				],
+				"type": "object",
+				"description": "Recursively unwraps the \"awaited type\" of a type. Non-promise \"thenables\" should resolve to `never`. This emulates the behavior of `await`."
+			},
+			"ApiResponse_Awaited_ReturnType_typeoflistMyReviews___": {
+				"properties": {
+					"resultType": {
+						"type": "string",
+						"enum": [
+							"SUCCESS"
+						],
+						"nullable": false
+					},
+					"error": {
+						"type": "number",
+						"enum": [
+							null
+						],
+						"nullable": true
+					},
+					"data": {
+						"$ref": "#/components/schemas/Awaited_ReturnType_typeoflistMyReviews__"
+					}
+				},
+				"required": [
+					"resultType",
+					"error",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ListMyReviewsQuery": {
+				"properties": {
+					"cursor": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ApiResponse__storeId-number__": {
+				"properties": {
+					"resultType": {
+						"type": "string",
+						"enum": [
+							"SUCCESS"
+						],
+						"nullable": false
+					},
+					"error": {
+						"type": "number",
+						"enum": [
+							null
+						],
+						"nullable": true
+					},
+					"data": {
+						"properties": {
+							"storeId": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"storeId"
+						],
+						"type": "object"
+					}
+				},
+				"required": [
+					"resultType",
+					"error",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"AddStoreBody": {
+				"properties": {
+					"regionId": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"regionId",
+					"name",
+					"address"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ApiResponse__reviewId-number__": {
+				"properties": {
+					"resultType": {
+						"type": "string",
+						"enum": [
+							"SUCCESS"
+						],
+						"nullable": false
+					},
+					"error": {
+						"type": "number",
+						"enum": [
+							null
+						],
+						"nullable": true
+					},
+					"data": {
+						"properties": {
+							"reviewId": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"reviewId"
+						],
+						"type": "object"
+					}
+				},
+				"required": [
+					"resultType",
+					"error",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"AddReviewBody": {
+				"properties": {
+					"body": {
+						"type": "string"
+					},
+					"score": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"body",
+					"score"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ApiResponse__missionId-number__": {
+				"properties": {
+					"resultType": {
+						"type": "string",
+						"enum": [
+							"SUCCESS"
+						],
+						"nullable": false
+					},
+					"error": {
+						"type": "number",
+						"enum": [
+							null
+						],
+						"nullable": true
+					},
+					"data": {
+						"properties": {
+							"missionId": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"missionId"
+						],
+						"type": "object"
+					}
+				},
+				"required": [
+					"resultType",
+					"error",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"AddMissionBody": {
+				"properties": {
+					"reward": {
+						"type": "number",
+						"format": "double"
+					},
+					"deadline": {
+						"type": "string"
+					},
+					"missionSpec": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"reward",
+					"deadline",
+					"missionSpec"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Awaited_ReturnType_typeoflistStoreReviews__": {
+				"properties": {
+					"pagination": {
+						"properties": {
+							"cursor": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"cursor"
+						],
+						"type": "object"
+					},
+					"data": {
+						"items": {
+							"properties": {
+								"member": {
+									"properties": {
+										"name": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"name"
+									],
+									"type": "object"
+								},
+								"createdAt": {
+									"type": "string",
+									"format": "date-time"
+								},
+								"score": {
+									"type": "number",
+									"format": "double"
+								},
+								"body": {
+									"type": "string"
+								},
+								"id": {
+									"type": "number",
+									"format": "double"
+								}
+							},
+							"required": [
+								"member",
+								"createdAt",
+								"score",
+								"body",
+								"id"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"pagination",
+					"data"
+				],
+				"type": "object",
+				"description": "Recursively unwraps the \"awaited type\" of a type. Non-promise \"thenables\" should resolve to `never`. This emulates the behavior of `await`."
+			},
+			"ApiResponse_Awaited_ReturnType_typeoflistStoreReviews___": {
+				"properties": {
+					"resultType": {
+						"type": "string",
+						"enum": [
+							"SUCCESS"
+						],
+						"nullable": false
+					},
+					"error": {
+						"type": "number",
+						"enum": [
+							null
+						],
+						"nullable": true
+					},
+					"data": {
+						"$ref": "#/components/schemas/Awaited_ReturnType_typeoflistStoreReviews__"
+					}
+				},
+				"required": [
+					"resultType",
+					"error",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"StoreListQuery": {
+				"properties": {
+					"cursor": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Awaited_ReturnType_typeoflistStoreMissions__": {
+				"properties": {
+					"pagination": {
+						"properties": {
+							"cursor": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"cursor"
+						],
+						"type": "object"
+					},
+					"data": {
+						"items": {
+							"properties": {
+								"missionSpec": {
+									"type": "string"
+								},
+								"deadline": {
+									"type": "string",
+									"format": "date-time"
+								},
+								"reward": {
+									"type": "number",
+									"format": "double"
+								},
+								"id": {
+									"type": "number",
+									"format": "double"
+								}
+							},
+							"required": [
+								"missionSpec",
+								"deadline",
+								"reward",
+								"id"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"pagination",
+					"data"
+				],
+				"type": "object",
+				"description": "Recursively unwraps the \"awaited type\" of a type. Non-promise \"thenables\" should resolve to `never`. This emulates the behavior of `await`."
+			},
+			"ApiResponse_Awaited_ReturnType_typeoflistStoreMissions___": {
+				"properties": {
+					"resultType": {
+						"type": "string",
+						"enum": [
+							"SUCCESS"
+						],
+						"nullable": false
+					},
+					"error": {
+						"type": "number",
+						"enum": [
+							null
+						],
+						"nullable": true
+					},
+					"data": {
+						"$ref": "#/components/schemas/Awaited_ReturnType_typeoflistStoreMissions__"
+					}
+				},
+				"required": [
+					"resultType",
+					"error",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ApiResponse__memberMissionId-number__": {
+				"properties": {
+					"resultType": {
+						"type": "string",
+						"enum": [
+							"SUCCESS"
+						],
+						"nullable": false
+					},
+					"error": {
+						"type": "number",
+						"enum": [
+							null
+						],
+						"nullable": true
+					},
+					"data": {
+						"properties": {
+							"memberMissionId": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"memberMissionId"
+						],
+						"type": "object"
+					}
+				},
+				"required": [
+					"resultType",
+					"error",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Awaited_ReturnType_typeoflistOngoingMissions__": {
+				"properties": {
+					"pagination": {
+						"properties": {
+							"cursor": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"cursor"
+						],
+						"type": "object"
+					},
+					"data": {
+						"items": {
+							"properties": {
+								"mission": {
+									"properties": {
+										"missionSpec": {
+											"type": "string"
+										},
+										"deadline": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"reward": {
+											"type": "number",
+											"format": "double"
+										},
+										"store": {
+											"properties": {
+												"name": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"name"
+											],
+											"type": "object"
+										}
+									},
+									"required": [
+										"missionSpec",
+										"deadline",
+										"reward",
+										"store"
+									],
+									"type": "object"
+								},
+								"status": {
+									"type": "string"
+								},
+								"id": {
+									"type": "number",
+									"format": "double"
+								}
+							},
+							"required": [
+								"mission",
+								"status",
+								"id"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"pagination",
+					"data"
+				],
+				"type": "object",
+				"description": "Recursively unwraps the \"awaited type\" of a type. Non-promise \"thenables\" should resolve to `never`. This emulates the behavior of `await`."
+			},
+			"ApiResponse_Awaited_ReturnType_typeoflistOngoingMissions___": {
+				"properties": {
+					"resultType": {
+						"type": "string",
+						"enum": [
+							"SUCCESS"
+						],
+						"nullable": false
+					},
+					"error": {
+						"type": "number",
+						"enum": [
+							null
+						],
+						"nullable": true
+					},
+					"data": {
+						"$ref": "#/components/schemas/Awaited_ReturnType_typeoflistOngoingMissions__"
+					}
+				},
+				"required": [
+					"resultType",
+					"error",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"MissionListQuery": {
+				"properties": {
+					"cursor": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Awaited_ReturnType_typeofupdateMissionComplete__": {
+				"properties": {
+					"missionId": {
+						"type": "number",
+						"format": "double"
+					},
+					"status": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"memberId": {
+						"type": "number",
+						"format": "double"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"missionId",
+					"status",
+					"updatedAt",
+					"createdAt",
+					"memberId",
+					"id"
+				],
+				"type": "object",
+				"description": "Recursively unwraps the \"awaited type\" of a type. Non-promise \"thenables\" should resolve to `never`. This emulates the behavior of `await`."
+			},
+			"ApiResponse_Awaited_ReturnType_typeofupdateMissionComplete___": {
+				"properties": {
+					"resultType": {
+						"type": "string",
+						"enum": [
+							"SUCCESS"
+						],
+						"nullable": false
+					},
+					"error": {
+						"type": "number",
+						"enum": [
+							null
+						],
+						"nullable": true
+					},
+					"data": {
+						"$ref": "#/components/schemas/Awaited_ReturnType_typeofupdateMissionComplete__"
+					}
+				},
+				"required": [
+					"resultType",
+					"error",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "",
+		"contact": {}
+	},
+	"paths": {
+		"/users/signup": {
+			"post": {
+				"operationId": "HandleUserSignUp",
+				"responses": {
+					"200": {
+						"description": "회원가입 성공",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponse_UserSignUpResponse_"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "이미 존재하는 이메일 (U001)"
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserSignUpRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/me": {
+			"patch": {
+				"operationId": "HandleUserUpdate",
+				"responses": {
+					"200": {
+						"description": "유저 정보 수정 성공",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponse_any_"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "인증 실패"
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserUpdateRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/{memberId}/reviews": {
+			"get": {
+				"operationId": "HandleListMyReviews",
+				"responses": {
+					"200": {
+						"description": "리뷰 목록 조회 성공",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponse_Awaited_ReturnType_typeoflistMyReviews___"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "인증 실패"
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "memberId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "cursor",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/users/guest": {
+			"get": {
+				"operationId": "HandleGuestPage",
+				"responses": {
+					"200": {
+						"description": "게스트 페이지 조회 성공",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/stores": {
+			"post": {
+				"operationId": "HandleAddStore",
+				"responses": {
+					"201": {
+						"description": "가게 등록 성공",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponse__storeId-number__"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "인증 실패"
+					}
+				},
+				"tags": [
+					"Stores"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AddStoreBody"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/stores/{storeId}/reviews": {
+			"post": {
+				"operationId": "HandleAddReview",
+				"responses": {
+					"201": {
+						"description": "리뷰 등록 성공",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponse__reviewId-number__"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "인증 실패"
+					},
+					"404": {
+						"description": "존재하지 않는 가게 (S001)"
+					}
+				},
+				"tags": [
+					"Stores"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "storeId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AddReviewBody"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "HandleListStoreReviews",
+				"responses": {
+					"200": {
+						"description": "리뷰 목록 조회 성공",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponse_Awaited_ReturnType_typeoflistStoreReviews___"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Stores"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "storeId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "cursor",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/stores/{storeId}/missions": {
+			"post": {
+				"operationId": "HandleAddMission",
+				"responses": {
+					"201": {
+						"description": "미션 등록 성공",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponse__missionId-number__"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "인증 실패"
+					},
+					"404": {
+						"description": "존재하지 않는 가게 (S001)"
+					}
+				},
+				"tags": [
+					"Stores"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "storeId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AddMissionBody"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "HandleListStoreMissions",
+				"responses": {
+					"200": {
+						"description": "미션 목록 조회 성공",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponse_Awaited_ReturnType_typeoflistStoreMissions___"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Stores"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "storeId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "cursor",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/missions/{missionId}/challenge": {
+			"post": {
+				"operationId": "HandleChallengeMission",
+				"responses": {
+					"201": {
+						"description": "미션 도전 성공",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponse__memberMissionId-number__"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "인증 실패"
+					},
+					"409": {
+						"description": "이미 도전 중인 미션 (M001)"
+					}
+				},
+				"tags": [
+					"Missions"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "missionId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/members/{memberId}/missions": {
+			"get": {
+				"operationId": "HandleListOngoingMissions",
+				"responses": {
+					"200": {
+						"description": "미션 목록 조회 성공",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponse_Awaited_ReturnType_typeoflistOngoingMissions___"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "인증 실패"
+					}
+				},
+				"tags": [
+					"Members"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "memberId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "cursor",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/member-missions/{memberMissionId}/complete": {
+			"patch": {
+				"operationId": "HandleCompleteMission",
+				"responses": {
+					"200": {
+						"description": "미션 완료 처리 성공",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResponse_Awaited_ReturnType_typeofupdateMissionComplete___"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "인증 실패"
+					}
+				},
+				"tags": [
+					"MemberMissions"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "memberMissionId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}

@@ -1,0 +1,17 @@
+{
+  "entryFile": "src/index.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": ["src/**/*.controller.ts"],
+  "outputDirectory": "dist",
+  "specVersion": 3,
+  "name": "UMC Mission API",
+  "version": "1.0.0",
+  "description": "UMC Node.js 스터디 미션 API 문서",
+  "spec": {
+    "outputDirectory": "dist",
+    "specVersion": 3
+  },
+  "routes": {
+    "routesDir": "src/generated"
+  }
+}
