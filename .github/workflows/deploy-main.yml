@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Week10/02junho/Practice
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -17,6 +20,7 @@ jobs:
         with:
           node-version: "24"
           cache: "npm"
+          cache-dependency-path: Week10/02junho/Practice/package-lock.json
       - name: Install dependencies
         run: npm ci
       - name: Inject environment variables
@@ -44,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-artifact
-          path: artifact.tgz
+          path: Week10/02junho/Practice/artifact.tgz
 
   deploy:
     runs-on: ubuntu-latest
