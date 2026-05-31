@@ -1,0 +1,187 @@
+name: deploy-seongsoon1818
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "Week10/seongsoon1818/Mission/**"
+      - ".github/workflows/deploy-seongsoon1818.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: Week10/seongsoon1818/Mission
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+          cache-dependency-path: Week10/seongsoon1818/Mission/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Inject environment variables
+        run: |
+          cat > .env <<'EOF'
+          ${{ secrets.SEONGSOON1818_EC2_DOT_ENV }}
+          EOF
+
+      - name: Generate Prisma Client and Build
+        run: |
+          npx prisma generate
+          npm run build
+
+      - name: Pack artifact
+        run: |
+          mkdir -p artifact
+          cp -r dist artifact/dist
+          cp package.json package-lock.json artifact/
+
+          if [ -d prisma ]; then
+            cp -r prisma artifact/prisma
+          fi
+
+          if [ -f prisma.config.ts ]; then
+            cp prisma.config.ts artifact/prisma.config.ts
+          fi
+
+          if [ -f prisma.config.js ]; then
+            cp prisma.config.js artifact/prisma.config.js
+          fi
+
+          tar -czf artifact.tgz -C artifact .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: seongsoon1818-app-artifact
+          path: Week10/seongsoon1818/Mission/artifact.tgz
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: seongsoon1818-app-artifact
+          path: .
+
+      - name: Extract artifact
+        run: |
+          mkdir -p artifact
+          tar -xzf artifact.tgz -C artifact
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "$EC2_SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          cat >> ~/.ssh/config <<END
+          Host target
+              HostName $EC2_HOST
+              Port $EC2_PORT
+              User $EC2_USER
+              IdentityFile ~/.ssh/id_rsa
+              StrictHostKeyChecking no
+          END
+        env:
+          EC2_SSH_KEY: ${{ secrets.SEONGSOON1818_EC2_SSH_KEY }}
+          EC2_HOST: ${{ secrets.SEONGSOON1818_EC2_HOST }}
+          EC2_PORT: ${{ secrets.SEONGSOON1818_EC2_PORT }}
+          EC2_USER: ${{ secrets.SEONGSOON1818_EC2_USER }}
+
+      - name: Copy artifact to server
+        run: |
+          ssh target 'sudo mkdir -p /opt/app/umc10th-seongsoon1818/incoming && sudo chown -R ec2-user:ec2-user /opt/app/umc10th-seongsoon1818'
+
+          rsync -az --delete \
+            --exclude ".git" \
+            --exclude ".env" \
+            artifact/ \
+            target:/opt/app/umc10th-seongsoon1818/incoming/
+
+      - name: Create environment variables
+        run: |
+          ssh target "cat > /opt/app/umc10th-seongsoon1818/incoming/.env <<'EOF'
+          ${{ secrets.SEONGSOON1818_EC2_DOT_ENV }}
+          EOF"
+
+      - name: Install production dependencies on EC2
+        run: |
+          ssh target '
+            set -e
+            cd /opt/app/umc10th-seongsoon1818/incoming
+
+            if [ -s /home/ec2-user/.nvm/nvm.sh ]; then
+              source /home/ec2-user/.nvm/nvm.sh
+            fi
+
+            npm ci --omit=dev
+            npx prisma generate
+          '
+
+      - name: Apply Prisma migrations
+        run: |
+          ssh target '
+            set -e
+            cd /opt/app/umc10th-seongsoon1818/incoming
+
+            if [ -s /home/ec2-user/.nvm/nvm.sh ]; then
+              source /home/ec2-user/.nvm/nvm.sh
+            fi
+
+            npx prisma migrate deploy
+          '
+
+      - name: Switch deployment directory
+        run: |
+          ssh target '
+            set -e
+            cd /opt/app/umc10th-seongsoon1818
+            rm -rf previous
+            if [ -d current ]; then mv current previous; fi
+            mv incoming current
+          '
+
+      - name: Configure systemd service
+        run: |
+          ssh target 'sudo systemctl unmask UMC_10th_seongsoon1818 || true'
+
+          cat <<'EOF' | ssh target 'sudo tee /etc/systemd/system/UMC_10th_seongsoon1818.service > /dev/null'
+          [Unit]
+          Description=UMC_10th_seongsoon1818
+          After=network.target
+
+          [Service]
+          User=ec2-user
+          WorkingDirectory=/opt/app/umc10th-seongsoon1818/current
+          ExecStart=/bin/bash -lc 'if [ -s /home/ec2-user/.nvm/nvm.sh ]; then source /home/ec2-user/.nvm/nvm.sh; fi; npm run start'
+          Restart=always
+          RestartSec=5
+          Environment=NODE_ENV=production
+
+          [Install]
+          WantedBy=multi-user.target
+          EOF
+
+          ssh target 'sudo systemctl daemon-reload'
+          ssh target 'sudo systemctl enable UMC_10th_seongsoon1818'
+          ssh target 'sudo systemctl restart UMC_10th_seongsoon1818'
+
+      - name: Check service status
+        run: |
+          ssh target 'sudo systemctl status UMC_10th_seongsoon1818 -l --no-pager'
