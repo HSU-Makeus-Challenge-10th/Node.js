@@ -63,17 +63,17 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           cat >> ~/.ssh/config <<END
           Host target
-              HostName $EC2_HOST
-              Port $EC2_PORT
-              User $EC2_USER
+              HostName $EC2_HOST_Wendy
+              Port $EC2_PORT_Wendy
+              User $EC2_USER_Wendy
               IdentityFile ~/.ssh/id_rsa
               StrictHostKeyChecking no
           END
         env:
           EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
-          EC2_HOST: ${{ secrets.EC2_HOST }}
-          EC2_PORT: ${{ secrets.EC2_PORT }}
-          EC2_USER: ${{ secrets.EC2_USER }}
+          EC2_HOST_Wendy: ${{ secrets.EC2_HOST_Wendy }}
+          EC2_PORT_Wendy: ${{ secrets.EC2_PORT_Wendy }}
+          EC2_USER_Wendy: ${{ secrets.EC2_USER_Wendy }}
       - name: Copy artifact to Server
         run: |
           ssh target 'sudo mkdir -p /opt/app/umc10th/incoming&&sudo chown -R ubuntu:ubuntu /opt/app/umc10th'
