@@ -74,7 +74,7 @@ jobs:
               StrictHostKeyChecking no
           END
         env:
-          EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+          EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY_Wendy }}
           EC2_HOST_Wendy: ${{ secrets.EC2_HOST_Wendy }}
           EC2_PORT_Wendy: ${{ secrets.EC2_PORT_Wendy }}
           EC2_USER_Wendy: ${{ secrets.EC2_USER_Wendy }}
