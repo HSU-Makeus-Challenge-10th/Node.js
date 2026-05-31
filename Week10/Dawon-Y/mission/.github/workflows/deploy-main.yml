@@ -20,10 +20,10 @@ jobs:
       - name: Inject environment variables
         run: |
           cat > .env <<'EOF'
-          ${{ secrets.EC2_DOT_ENV }}
+          ${{ secrets.EC2_DOT_ENV_Wendy }}
           EOF
         env:
-          EC2_DOT_ENV: ${{ secrets.EC2_DOT_ENV }}
+          EC2_DOT_ENV_Wendy: ${{ secrets.EC2_DOT_ENV_Wendy }}
       - name: Generate + Build
         run: npx prisma generate&&npm run build
       - name: Prune devDependencies (runtime) + Regenerate
@@ -94,10 +94,10 @@ jobs:
       - name: Create environment variables
         run: |
           ssh target "cat > /opt/app/umc10th/current/.env <<'EOF'
-          ${{ secrets.EC2_DOT_ENV }}
+          ${{ secrets.EC2_DOT_ENV_Wendy }}
           EOF"
         env:
-          EC2_DOT_ENV: ${{ secrets.EC2_DOT_ENV }}
+          EC2_DOT_ENV_Wendy: ${{ secrets.EC2_DOT_ENV_Wendy }}
       - name: Config systemd service file
         run: |
           ssh target 'sudo systemctl unmask UMC_10th || true'
